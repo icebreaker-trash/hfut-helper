@@ -1,5 +1,8 @@
 <script lang='ts' setup>
 import { reactive } from 'vue'
+import * as _ from 'lodash'
+import Notify from '@vant/weapp/dist/notify/notify'
+import Toast from '@vant/weapp/dist/toast/toast'
 import img from '@/views/login/img.png'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Tip from '@/components/base/Tip.vue'
@@ -10,19 +13,100 @@ const form = reactive({
   password: '',
 })
 
+// 考虑到小程序功能没有多少表单验证，所以没必要装插件，直接手撸吧
+function validate() {
+  const username = form.username
+
+  const validateUsername = () => {
+    if (username.length === 0) {
+      Notify({ type: 'warning', message: '学号不能为空' })
+      return false
+    }
+    if (_.isNaN(_.toNumber(username))) {
+      return
+    }
+    if (username.length !== 10) {
+      return
+    }
+    if (!username.startsWith('20')) {
+      return
+    }
+
+    return true
+  }
+
+  const validatePwd = () => {
+    const pwd = form.password
+    if (pwd.length === 0) {
+      Notify({ type: 'danger', message: '密码不能为空' })
+      return
+    }
+    if (pwd.length < 13) {
+      return false
+    }
+  }
+
+  const isValidate = {
+    username: validateUsername(),
+    pwd: validatePwd(),
+  }
+  if (isValidate.username === undefined) {
+    Notify({ type: 'danger', message: '学号格式错误' })
+    return
+  } else if (isValidate.username === undefined) {
+    console.log('us')
+    return
+  }
+
+  if (isValidate.pwd === false) {
+    Notify({ type: 'danger', message: '密码格式错误，信息门户的密码至少是13位数字' })
+    return
+  } else if (!isValidate.pwd === undefined) {
+    return
+  }
+
+  return true
+}
+
 function onLogin() {
-  uni.request({
-    url: `${requestConfig.baseURL}login?username=${form.username}&password=${form.password}`,
-    method: 'GET',
-    success(res) {
-      console.log(res)
-    },
-  })
+  if (validate()) {
+    Toast.loading({
+      duration: 0,
+      message: '第一次登录会花些时间，请耐心等待...\n(๑•̀ㅂ•́)و✧',
+      forbidClick: true,
+    })
+    uni.request({
+      url: `${requestConfig.baseURL}login?username=${form.username}&password=${form.password}`,
+      method: 'GET',
+      success(res) {
+        if (res.statusCode !== 200) {
+          Toast.fail({
+            forbidClick: true,
+            duration: 3000,
+            message: `Σ(｀д′*ノ)ノ\n${(res.data as any).msg}`,
+          })
+        } else {
+          Toast.success({
+            duration: 3000,
+            message: '<(￣︶￣)>\n登录成功',
+          })
+        }
+      },
+      fail(res) {
+        Toast.fail({
+          duration: 3000,
+          message: '.....((/- -)/\n登录失败了...',
+        })
+      },
+    })
+  }
 }
 
 </script>
 
 <template>
+  <van-toast id="van-toast" />
+  <van-notify id="van-notify" />
   <view class="login-page">
     <view class="login-page-header">
       <img class="logo" :src="img">
@@ -35,8 +119,10 @@ function onLogin() {
       <div class="username">
         <van-field
           clearable
+          type="number"
           left-icon="user-circle-o"
           placeholder="请输入学号"
+          :values="form.username"
           @change="(e) => form.username = e.detail"
         />
       </div>
