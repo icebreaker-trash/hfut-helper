@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import Toast from '@vant/weapp/dist/toast/toast'
+
 onLaunch(() => {
-  console.log('App Launch')
+
 })
 onShow(() => {
-  console.log('App Show')
+
 })
 onHide(() => {
   console.log('App Hide')
@@ -12,7 +14,7 @@ onHide(() => {
 </script>
 
 <template>
-  <view>hello world</view>
+  <van-toast id="van-toast" />
 </template>
 <style>
 @import "./wxComponents/vant/dist/common/index.wxss";

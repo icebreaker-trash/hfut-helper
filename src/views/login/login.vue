@@ -18,10 +18,6 @@ function validate() {
   const username = form.username
 
   const validateUsername = () => {
-    if (username.length === 0) {
-      Notify({ type: 'warning', message: '学号不能为空' })
-      return false
-    }
     if (_.isNaN(_.toNumber(username))) {
       return
     }
@@ -37,31 +33,23 @@ function validate() {
 
   const validatePwd = () => {
     const pwd = form.password
-    if (pwd.length === 0) {
-      Notify({ type: 'danger', message: '密码不能为空' })
+    if (pwd.length < 13) {
       return
     }
-    if (pwd.length < 13) {
-      return false
-    }
+    return true
   }
 
   const isValidate = {
     username: validateUsername(),
     pwd: validatePwd(),
   }
-  if (isValidate.username === undefined) {
+  if (!isValidate.username) {
     Notify({ type: 'danger', message: '学号格式错误' })
-    return
-  } else if (isValidate.username === undefined) {
-    console.log('us')
     return
   }
 
-  if (isValidate.pwd === false) {
-    Notify({ type: 'danger', message: '密码格式错误，信息门户的密码至少是13位数字' })
-    return
-  } else if (!isValidate.pwd === undefined) {
+  if (!isValidate.pwd) {
+    Notify({ type: 'danger', message: '密码格式错误，信息门户的密码至少是13位字符' })
     return
   }
 
