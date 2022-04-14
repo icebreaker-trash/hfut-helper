@@ -8,6 +8,9 @@
         "navigationBarTitleText": "登录",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "views/home/home",
     }
   ],
   "globalStyle": {
