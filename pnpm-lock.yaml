@@ -32,6 +32,7 @@ specifiers:
   prettier: ^2.6.2
   sass: ^1.50.0
   typescript: ^4.6.3
+  uni-ajax: ^2.4.4
   vite: ^2.9.1
   vue: ^3.2.31
   vue-i18n: ^9.1.9
@@ -53,6 +54,7 @@ dependencies:
   '@vant/weapp': 1.10.2
   '@vueuse/core': 8.2.5_vue@3.2.32
   lodash: 4.17.21
+  uni-ajax: 2.4.4
   vue: 3.2.32
   vue-i18n: 9.1.9_vue@3.2.32
   vuex: 4.0.2_vue@3.2.32
@@ -4455,6 +4457,10 @@ packages:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
     dev: true
+
+  /uni-ajax/2.4.4:
+    resolution: {integrity: sha512-2UlOek3FBD4C8jwouJWAf1NvoseYbpbQXnZ5GsECvZoFl9NrDiazian2tzfMCSQINu3+7uq5499hR2//PYC7PA==}
+    dev: false
 
   /unist-util-stringify-position/2.0.3:
     resolution: {integrity: sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==}
