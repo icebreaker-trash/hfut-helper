@@ -28,6 +28,7 @@ specifiers:
   eslint: ^8.13.0
   eslint-plugin-promise: ^6.0.0
   lodash: ^4.17.21
+  pinia: ^2.0.13
   postcss: ^8.4.12
   prettier: ^2.6.2
   sass: ^1.50.0
@@ -54,6 +55,7 @@ dependencies:
   '@vant/weapp': 1.10.2
   '@vueuse/core': 8.2.5_vue@3.2.32
   lodash: 4.17.21
+  pinia: 2.0.13_typescript@4.6.3+vue@3.2.32
   uni-ajax: 2.4.4
   vue: 3.2.32
   vue-i18n: 9.1.9_vue@3.2.32
@@ -3756,6 +3758,24 @@ packages:
   /pify/2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
+
+  /pinia/2.0.13_typescript@4.6.3+vue@3.2.32:
+    resolution: {integrity: sha512-B7rSqm1xNpwcPMnqns8/gVBfbbi7lWTByzS6aPZ4JOXSJD4Y531rZHDCoYWBwLyHY/8hWnXljgiXp6rRyrofcw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.1.4
+      typescript: 4.6.3
+      vue: 3.2.32
+      vue-demi: 0.12.5_vue@3.2.32
+    dev: false
 
   /pluralize/8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
