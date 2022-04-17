@@ -13,7 +13,6 @@ onHide(() => {
 </script>
 
 <template>
-  <view>114514</view>
   <router-view />
 </template>
 <style>
