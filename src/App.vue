@@ -5,14 +5,17 @@ onLaunch(() => {
 
 })
 onShow(() => {
-
+  console.log('App Show')
 })
 onHide(() => {
   console.log('App Hide')
 })
 </script>
 
-<template />
+<template>
+  <view>114514</view>
+  <router-view />
+</template>
 <style>
 @import "./wxComponents/vant/dist/common/index.wxss";
 </style>

@@ -1,6 +1,5 @@
 {
   "pages": [
-    /** pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages **/
     {
       "path": "views/login/login",
       "style": {
@@ -10,9 +9,23 @@
       }
     },
     {
-      "path": "views/home/home",
+      "path": "views/home/home"
     }
   ],
+  "tabBar": {
+    "height": "20px",
+    "fontsize": "16px",
+    "list": [
+      {
+        "text": "登录",
+        "pagePath": "views/login/login"
+      },
+      {
+        "text": "首页",
+        "pagePath": "views/home/home"
+      }
+    ]
+  },
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

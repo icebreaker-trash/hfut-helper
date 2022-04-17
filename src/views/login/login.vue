@@ -34,7 +34,7 @@ async function onLogin() {
       Toast.success({
         message: '登录成功',
       })
-      uni.redirectTo({
+      uni.switchTab({
         url: '/views/home/home',
       })
     }
