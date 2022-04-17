@@ -1,15 +1,15 @@
 {
   "pages": [
     {
+      "path": "views/home/home",
+      "navigationBarTitleText": "日程课表"
+    },
+    {
       "path": "views/login/login",
       "style": {
-        "navigationBarBackgroundColor": "#fff",
         "navigationBarTitleText": "登录",
         "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "views/home/home"
     }
   ],
   "tabBar": {
@@ -21,7 +21,7 @@
         "pagePath": "views/login/login"
       },
       {
-        "text": "首页",
+        "text": "日程课表",
         "pagePath": "views/home/home"
       }
     ]
