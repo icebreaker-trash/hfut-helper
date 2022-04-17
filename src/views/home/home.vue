@@ -1,21 +1,26 @@
 <script lang='ts' setup>
-import { onLoad } from '@dcloudio/uni-app'
-import { useAsync } from '@/hooks/use-async'
-import { getCourseListRequest } from '@/service/api/eam'
+import { useAsyncState } from '@vueuse/core'
 
-onLoad(async() => {
-  console.log('launch')
-  const { state, error } = await useAsync(getCourseListRequest)
-  if (state.value) {
-    console.log(state.value)
-  }
-})
+import { computed } from 'vue'
+import { getCourseListRequest } from '@/service/api/eam'
+import Loading from '@/components/base/Loading.vue'
+
+const { state, isLoading } = useAsyncState(getCourseListRequest, {} as any)
+
+const courseList = computed(() => (state.value as any).scheduleList)
+
+console.log(courseList.value)
 </script>
 
 <template>
-  <view>hello home</view>
+  <view v-for="course in courseList">
+    {{ course.personName }}
+  </view>
+  <view class="container">
+    <Loading :loading="isLoading" />
+  </view>
 </template>
 
- <style lang='scss' scoped>
+<style scoped>
 
 </style>
