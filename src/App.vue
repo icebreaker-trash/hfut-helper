@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { courseList } from '@/_mock_/auth'
 
 onLaunch(() => {
 
@@ -10,6 +11,7 @@ onShow(() => {
 onHide(() => {
   console.log('App Hide')
 })
+
 </script>
 
 <template>

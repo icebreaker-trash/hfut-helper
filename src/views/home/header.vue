@@ -2,12 +2,15 @@
 import { computed, ref } from 'vue'
 import { format } from 'date-fns'
 import { activeWeekIdx, buildWeek, currentDayIdx } from '@/shared/constant'
-import { useStorage } from '@/hooks/use-storage'
 import IconButton from '@/components/base/IconButton.vue'
+import { useCourseListStore } from '@/store/courseList.store'
+import { courseList } from '@/_mock_/auth'
 
 const visibleDayIdx = ref(currentDayIdx)
 const visibleWeekIdx = ref(activeWeekIdx)
 const visibleWeek = computed(() => buildWeek(visibleWeekIdx.value))
+
+const courseStore = useCourseListStore()
 
 const weekdays = computed(() => visibleWeek.value.map((day, idx) => ({
   weekday: `${format(day, 'E')}.`,
@@ -18,8 +21,8 @@ const weekdays = computed(() => visibleWeek.value.map((day, idx) => ({
 }),
 ))
 
-const courseList = useStorage('courseList', [])
-
+courseStore.setCourse(courseList.result)
+console.log(courseStore.course)
 function onPrev() {
   if (visibleWeekIdx.value === 0) {
     visibleWeekIdx.value = 19
@@ -47,7 +50,9 @@ function handleActiveChange(idx: number) {
       <IconButton @click="onPrev">
         <van-icon name="arrow-left" class="text-slate" />
       </IconButton>
-      <view>第{{ visibleWeekIdx + 1 }}周</view>
+      <view class="flex items-center">
+        第{{ visibleWeekIdx + 1 }}周
+      </view>
       <IconButton @click="onNext">
         <van-icon name="arrow" class="text-slate" />
       </IconButton>
