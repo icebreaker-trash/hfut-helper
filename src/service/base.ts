@@ -3,7 +3,7 @@ import ajax from 'uni-ajax'
 import { requestConfig } from '@/shared/config/request'
 
 const headers = {
-  cookie: '',
+  cookie: 'wengine_vpn_ticketwebvpn_hfut_edu_cn=34f22e1461ba1999',
 }
 
 export function createInstance(config: AjaxRequestConfig) {

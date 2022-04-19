@@ -13,9 +13,11 @@ export const currentSemesterWeeks = eachWeekOfInterval({
 
 export const activeWeekIdx = currentSemesterWeeks.findIndex(week => currentTime < week) - 1
 
-export const currentWeek = eachDayOfInterval({
-  start: currentSemesterWeeks[activeWeekIdx],
-  end: currentSemesterWeeks[activeWeekIdx + 1],
+export const buildWeek = (idx: number) => eachDayOfInterval({
+  start: currentSemesterWeeks[idx],
+  end: currentSemesterWeeks[idx + 1],
 }).slice(0, 7)
 
-export const currentDayIdx = currentWeek.findIndex(day => currentTime.getDate() === day.getDate())
+export const currentWeek = buildWeek(activeWeekIdx)
+
+export const currentDayIdx = currentWeek.findIndex(day => currentTime < day) - 1

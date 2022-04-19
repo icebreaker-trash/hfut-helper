@@ -1,13 +1,24 @@
 <script lang='ts' setup>
 import { useAsyncState } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import Header from './Header.vue'
 import { getCourseListRequest } from '@/service/api/eam'
 import Loading from '@/components/base/Loading.vue'
+import { useStorage } from '@/hooks/use-storage'
 
-const { state, isLoading } = useAsyncState(getCourseListRequest, {} as any)
+const { state, isLoading, isReady } = useAsyncState(getCourseListRequest, {} as any)
 
-const courseList = computed(() => (state.value as any).data?.result?.scheduleList)
+const courseList = computed(() => (state.value as any).data?.result)
+
+watchEffect(() => {
+  if (isReady.value) {
+    const data = formatCourseList(courseList.value)
+    useStorage('courseList', data)
+  }
+})
+
+function formatCourseList(data: any) {
+}
 
 </script>
 

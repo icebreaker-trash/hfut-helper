@@ -1,29 +1,44 @@
 <script lang='ts' setup>
 import { computed, ref } from 'vue'
 import { format } from 'date-fns'
-import { activeWeekIdx, currentDayIdx, currentWeek } from '@/shared/constant'
+import { activeWeekIdx, buildWeek, currentDayIdx, currentWeek } from '@/shared/constant'
+import { useStorage } from '@/hooks/use-storage'
 
-const activeIdx = ref(currentDayIdx)
+const visibleDayIdx = ref(currentDayIdx)
+const visibleWeekIdx = ref(activeWeekIdx)
+const visibleWeek = computed(() => buildWeek(visibleWeekIdx.value))
 
-const weekdays = computed(() => currentWeek.map((day, idx) => ({
+const weekdays = computed(() => visibleWeek.value.map((day, idx) => ({
   weekday: `${format(day, 'E')}.`,
   day: format(day, 'd'),
-  active: activeIdx.value === idx,
+  date: day,
+  active: visibleDayIdx.value === idx,
   idx,
 }),
 ))
 
-function handleActiveChange(idx: number) {
-  activeIdx.value = idx
+const courseList = useStorage('courseList', [])
+
+function onPrev() {
+  visibleWeekIdx.value -= 1
 }
+
+function onNext() {
+  visibleWeekIdx.value += 1
+}
+
+function handleActiveChange(idx: number) {
+  visibleDayIdx.value = idx
+}
+
 </script>
 
 <template>
   <view class="header">
     <view class="select">
-      <van-icon name="arrow-left" class="text-slate" />
-      <view>第{{ activeWeekIdx + 1 }}周</view>
-      <van-icon name="arrow" class="text-slate" />
+      <van-icon name="arrow-left" class="text-slate" @click="onPrev" />
+      <view>第{{ visibleWeekIdx + 1 }}周</view>
+      <van-icon name="arrow" class="text-slate" @click="onNext" />
     </view>
     <view class="card-container">
       <view
