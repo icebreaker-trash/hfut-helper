@@ -2,7 +2,9 @@
   "pages": [
     {
       "path": "views/home/home",
-      "navigationBarTitleText": "日程课表"
+      "style": {
+        "navigationBarTitleText": ""
+      }
     },
     {
       "path": "views/login/login",
