@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { format } from 'date-fns'
 import type { WeekDays } from '@/shared/types'
 import { activeWeekIdx, buildWeek, currentDayIdx } from '@/shared/constant'
+import { courseList } from '@/_mock_/auth'
 
 function transformCourse(course: ICourseList) {
   const { scheduleList } = course
@@ -51,11 +52,7 @@ interface CourseActions {
 
 export const useCourseListStore = defineStore<string, CourseStore, CourseGetters, CourseActions>('course-list', {
   state: () => ({
-    course: {
-      lessonList: [],
-      scheduleList: [],
-      scheduleGroupList: [],
-    },
+    course: courseList.result as unknown as ICourseList,
     visibleDayIdx: currentDayIdx,
     visibleWeekIdx: activeWeekIdx,
   }),
