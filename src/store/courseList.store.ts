@@ -1,41 +1,93 @@
 import { defineStore } from 'pinia'
+import { format } from 'date-fns'
+import type { WeekDays } from '@/shared/types'
+import { activeWeekIdx, buildWeek, currentDayIdx } from '@/shared/constant'
 
-export const useCourseListStore = defineStore<string, { course: ICourseList }, any>('course-list', {
+function transformCourse(course: ICourseList) {
+  const { scheduleList } = course
+  const res = Object.create(null)
+  scheduleList.forEach((list) => {
+    if (!res[list.date]) {
+      res[list.date] = []
+    }
+    res[list.date].push({
+      startTime: list.startTime,
+      teacherName: list.personName,
+      lessonDetail: getCourseDetail(course, list),
+    })
+  })
+  Object.keys(res).forEach((key) => {
+    res[key].sort((a: any, b: any) => {
+      return a.startTime - b.startTime
+    })
+  })
+  return res
+}
+
+function getCourseDetail(course: ICourseList, list: ScheduleList) {
+  const { lessonList } = course
+  return lessonList.find(item => item.id === list.lessonId)
+}
+
+interface CourseStore {
+  course: ICourseList
+  visibleDayIdx: number
+  visibleWeekIdx: number
+}
+
+interface CourseGetters {
+  visibleWeek: (state: CourseStore) => Date[]
+  weekdays: (state: CourseStore) => WeekDays
+  currentWeekCourse: (state: CourseStore) => any
+  [key: string]: any
+}
+
+interface CourseActions {
+  setVisibleDayIdx: (idx: number) => void
+  setVisibleWeekIdx: (idx: number) => void
+  setCourse: (course: ICourseList) => void
+  isCourseExist: () => boolean
+}
+
+export const useCourseListStore = defineStore<string, CourseStore, CourseGetters, CourseActions>('course-list', {
   state: () => ({
     course: {
       lessonList: [],
       scheduleList: [],
       scheduleGroupList: [],
     },
+    visibleDayIdx: currentDayIdx,
+    visibleWeekIdx: activeWeekIdx,
   }),
+  getters: {
+    visibleWeek(state: CourseStore) {
+      return buildWeek(state.visibleWeekIdx)
+    },
+    currentWeekCourse() {
+      return this.weekdays.map(day => (this.course as any)[format(day.date, 'yyy-MM-dd')] || {})
+    },
+    weekdays(state: CourseStore) {
+      return this.visibleWeek.map((day, idx) => ({
+        weekday: `${format(day, 'E')}.`,
+        day: format(day, 'd'),
+        date: day,
+        active: state.visibleDayIdx === idx,
+        idx,
+      }))
+    },
+  },
   actions: {
+    setVisibleDayIdx(idx) {
+      this.visibleDayIdx = idx
+    },
+    setVisibleWeekIdx(idx) {
+      this.visibleWeekIdx = idx
+    },
     setCourse(course: ICourseList) {
-      this.course = this.formatCourse(course)
+      this.course = transformCourse(course)
     },
-    formatCourse(course: ICourseList) {
-      const { lessonList, scheduleGroupList, scheduleList } = course
-      this.course = course as ICourseList
-      const res = Object.create(null)
-      scheduleList.forEach((list) => {
-        if (!res[list.date]) {
-          res[list.date] = []
-        }
-        res[list.date].push({
-          startTime: list.startTime,
-          teacherName: list.personName,
-          lessonDetail: this.getCourseDetail(list),
-        })
-      })
-      Object.keys(res).forEach((key) => {
-        res[key].sort((a: any, b: any) => {
-          return a.startTime - b.startTime
-        })
-      })
-      return res
-    },
-    getCourseDetail(list: ScheduleList) {
-      const { lessonList } = this.course
-      return lessonList.find(item => item.id === list.lessonId)
+    isCourseExist() {
+      return Object.keys(this.course).length === 0
     },
   },
 })
