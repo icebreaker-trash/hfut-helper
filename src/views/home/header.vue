@@ -1,46 +1,30 @@
 <script lang='ts' setup>
-import { computed, ref } from 'vue'
-import { format } from 'date-fns'
-import { activeWeekIdx, buildWeek, currentDayIdx } from '@/shared/constant'
+import { storeToRefs } from 'pinia'
 import IconButton from '@/components/base/IconButton.vue'
 import { useCourseListStore } from '@/store/courseList.store'
-import { courseList } from '@/_mock_/auth'
 
-const visibleDayIdx = ref(currentDayIdx)
-const visibleWeekIdx = ref(activeWeekIdx)
-const visibleWeek = computed(() => buildWeek(visibleWeekIdx.value))
+const store = useCourseListStore()
 
-const courseStore = useCourseListStore()
+const { visibleWeekIdx, weekdays } = storeToRefs(store)
 
-const weekdays = computed(() => visibleWeek.value.map((day, idx) => ({
-  weekday: `${format(day, 'E')}.`,
-  day: format(day, 'd'),
-  date: day,
-  active: visibleDayIdx.value === idx,
-  idx,
-}),
-))
-
-courseStore.setCourse(courseList.result)
-console.log(courseStore.course)
 function onPrev() {
   if (visibleWeekIdx.value === 0) {
-    visibleWeekIdx.value = 19
+    store.setVisibleWeekIdx(19)
   } else {
-    visibleWeekIdx.value -= 1
+    store.setVisibleWeekIdx(visibleWeekIdx.value - 1)
   }
 }
 
 function onNext() {
   if (visibleWeekIdx.value === 19) {
-    visibleWeekIdx.value = 0
+    store.setVisibleWeekIdx(0)
   } else {
-    visibleWeekIdx.value += 1
+    store.setVisibleWeekIdx(visibleWeekIdx.value + 1)
   }
 }
 
 function handleActiveChange(idx: number) {
-  visibleDayIdx.value = idx
+  store.setVisibleDayIdx(idx)
 }
 </script>
 
@@ -98,5 +82,12 @@ function handleActiveChange(idx: number) {
   background-color: rgba(66,104,234,1);
   color: #fff;
   box-shadow: rgb(32 101 209 / 40%) 0px 8px 16px 0px;
+}
+.course-list-cards {
+  .card {
+    width: 100%;
+    padding: 20px;
+    box-shadow:rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  }
 }
 </style>
