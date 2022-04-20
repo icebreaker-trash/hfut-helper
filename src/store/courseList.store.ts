@@ -52,16 +52,13 @@ interface CourseActions {
 
 export const useCourseListStore = defineStore<string, CourseStore, CourseGetters, CourseActions>('course-list', {
   state: () => ({
-    course: courseList.result as unknown as ICourseList,
+    course: transformCourse(courseList.result as any),
     visibleDayIdx: currentDayIdx,
     visibleWeekIdx: activeWeekIdx,
   }),
   getters: {
     visibleWeek(state: CourseStore) {
       return buildWeek(state.visibleWeekIdx)
-    },
-    currentWeekCourse() {
-      return this.weekdays.map(day => (this.course as any)[format(day.date, 'yyy-MM-dd')] || {})
     },
     weekdays(state: CourseStore) {
       return this.visibleWeek.map((day, idx) => ({
@@ -71,6 +68,9 @@ export const useCourseListStore = defineStore<string, CourseStore, CourseGetters
         active: state.visibleDayIdx === idx,
         idx,
       }))
+    },
+    currentWeekCourse(state: CourseStore) {
+      return this.weekdays.map(day => (state.course as any)[format(day.date, 'yyy-MM-dd')] || {})
     },
   },
   actions: {
