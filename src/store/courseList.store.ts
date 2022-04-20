@@ -7,19 +7,39 @@ import { courseList } from '@/_mock_/auth'
 function transformCourse(course: ICourseList) {
   const { scheduleList } = course
   const res = Object.create(null)
+
+  const transformTime = (time: number) => {
+    const hour = Math.floor(time / 100).toString().padStart(2, '0')
+    const minute = Math.floor(time % 100).toString().padEnd(2, '0')
+    return `${hour}:${minute}`
+  }
+
+  let prevDate: string
+
   scheduleList.forEach((list) => {
     if (!res[list.date]) {
       res[list.date] = []
     }
+    const lessonDetail = getCourseDetail(course, list)
+    if (
+      prevDate && list.date === prevDate
+      && res[prevDate][res[prevDate].length - 1].lessonDetail.id === list.lessonId
+    ) {
+      return
+    }
+    prevDate = list.date
     res[list.date].push({
-      startTime: list.startTime,
-      teacherName: list.personName,
-      lessonDetail: getCourseDetail(course, list),
+      startTime: transformTime(list.startTime),
+      endTime: transformTime(list.endTime),
+      sortTime: list.startTime,
+      teachers: lessonDetail!.teacherAssignmentList,
+      lessonDetail,
+      room: list.room,
     })
   })
   Object.keys(res).forEach((key) => {
     res[key].sort((a: any, b: any) => {
-      return a.startTime - b.startTime
+      return a.sortTime - b.sortTime
     })
   })
   return res
