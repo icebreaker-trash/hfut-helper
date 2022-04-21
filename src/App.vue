@@ -13,6 +13,6 @@ onHide(() => {
 
 <template />
 <style lang="scss">
-@import "./wxComponents/vant/dist/common/index.wxss";
+// @import "./wxComponents/vant/dist/common/index.wxss";
 
 </style>

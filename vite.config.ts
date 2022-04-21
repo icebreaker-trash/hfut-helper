@@ -30,7 +30,7 @@ function resolve(dir: string): string {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vwt(), uni()],
+  plugins: [uni(), isH5 ? undefined : vwt()],
   resolve: {
     alias: {
       '@': resolve('src/'),

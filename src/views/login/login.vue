@@ -50,7 +50,7 @@ async function onLogin() {
     <view class="login-page-header">
       <img class="logo" :src="img">
     </view>
-
+    <view class="h-[20px] w-[20px] bg-[#123456]" />
     <div class="tip">
       <Tip :type="'info'" :content="'忘记密码的话可以去信息门户重置一下噢'" />
     </div>

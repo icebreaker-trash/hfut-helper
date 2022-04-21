@@ -23,6 +23,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.19.0
   '@vant/weapp': ^1.10.2
   '@vueuse/core': ^8.2.5
+  '@vueuse/shared': ^8.3.0
   autoprefixer: ^9.8.8
   date-fns: ^2.28.0
   eslint: ^8.13.0
@@ -38,6 +39,7 @@ specifiers:
   uni-ajax: ^2.4.4
   vite: ^2.9.1
   vue: ^3.2.31
+  vue-demi: ^0.12.5
   vue-i18n: ^9.1.9
   vuex: ^4.0.2
   weapp-tailwindcss-webpack-plugin: ^1.2.9
@@ -57,11 +59,13 @@ dependencies:
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3040420220402002_postcss@8.4.12+vue@3.2.32
   '@vant/weapp': 1.10.2
   '@vueuse/core': 8.2.5_vue@3.2.32
+  '@vueuse/shared': 8.3.0_vue@3.2.32
   date-fns: 2.28.0
   lodash: 4.17.21
   pinia: 2.0.13_typescript@4.6.3+vue@3.2.32
   uni-ajax: 2.4.4
   vue: 3.2.32
+  vue-demi: 0.12.5_vue@3.2.32
   vue-i18n: 9.1.9_vue@3.2.32
   vuex: 4.0.2_vue@3.2.32
 
@@ -1421,6 +1425,21 @@ packages:
 
   /@vueuse/shared/8.2.5_vue@3.2.32:
     resolution: {integrity: sha512-lNWo+7sk6JCuOj4AiYM+6HZ6fq4xAuVq1sVckMQKgfCJZpZRe4i8es+ZULO5bYTKP+VrOCtqrLR2GzEfrbr3YQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.32
+      vue-demi: 0.12.5_vue@3.2.32
+    dev: false
+
+  /@vueuse/shared/8.3.0_vue@3.2.32:
+    resolution: {integrity: sha512-xehtLfevPw9nsVIGFe/tWMtFvbvZjeAfXh7DT9Fptt/6/C5rLwpJtxsVguIBtPybjwobO4KCpQYS78aa9fg5Sw==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
