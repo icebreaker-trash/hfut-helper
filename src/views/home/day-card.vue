@@ -9,7 +9,7 @@ const store = useCourseListStore()
 const { visibleDayIdx, currentWeekCourse } = storeToRefs(store)
 
 const cardsColor = reactive([
-  'bg-indigo-500 shadow-indigo-100',
+  'bg-[#4268EA] shadow-indigo-100',
   'bg-cyan-500 shadow-blue-100',
   'green shadow-green-100',
   'bg-cyan-500 shadow-cyan-100',
