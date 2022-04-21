@@ -45,7 +45,7 @@ function handleActiveChange(idx: number) {
       <view
         v-for="card in weekdays"
         :key="card.weekday"
-        :class="`card flex flex-col text-slate ${card.active?'card-active' : ''}`"
+        :class="`card flex flex-col ${card.active?'card-active' : ''}`"
         @click="handleActiveChange(card.idx)"
       >
         <view style="font-size: 12px;text-align: center">
