@@ -19,13 +19,13 @@ watch(visibleCourseList, (val) => {
     <view
       v-for="item in visibleCourseList"
       :key="item.lessonDetail.id"
-      class="card"
+      class="card  bg-blue-500 text-white shadow-lg shadow-blue-500/50 p-15"
     >
       <view class="header">
         <view class="time">
           {{ item.startTime }} - {{ item.endTime }}
         </view>
-        <view class="teacherName text-slate">
+        <view class="teacherName">
           {{ getTeacherName(item.teachers) }}
         </view>
       </view>
@@ -52,7 +52,7 @@ watch(visibleCourseList, (val) => {
     height: 70px;
     border-radius: 8px;
     padding: 25px 15px;
-    box-shadow:0 3px 20px -3px rgb(0 0 0/0.1),0 4px 20px -3px rgb(0 0 0/0.1);
+    color: white;
     .header {
       display: flex;
       justify-content: space-between;
