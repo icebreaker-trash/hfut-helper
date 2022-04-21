@@ -11,9 +11,8 @@ onHide(() => {
 })
 </script>
 
-<template>
-  <router-view />
-</template>
-<style>
+<template />
+<style lang="scss">
 @import "./wxComponents/vant/dist/common/index.wxss";
+
 </style>
